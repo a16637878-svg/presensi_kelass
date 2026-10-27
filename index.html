@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presensi Kelas</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Library QR Scanner & Generator -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.0.0/build/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Presensi Kelas</h1>
+    <p class="subtitle">Scan QR Code untuk Absensi</p>
+
+    <!-- QR Section -->
+    <div class="qr-section">
+      <div id="qrDisplay" class="qr-placeholder">
+        <span>QR Code akan muncul di sini</span>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn" id="refreshBtn">🔄 Refresh Data</button>
+        <button class="btn" id="downloadQrBtn">⬇️ Download QR</button>
+        <button class="btn" id="openSheetBtn">📊 Buka Sheet</button>
+        <button class="btn btn-danger" id="resetBtn">🗑️ Reset Presensi</button>
+      </div>
+
+      <div class="input-row">
+        <!-- DIUBAH: NIM → Nama -->
+        <input 
+          type="text" 
+          id="nimInput" 
+          placeholder="Ketik Nama untuk buat QR..." 
+        />
+        <button class="btn btn-primary" id="generateQrBtn">
+          Generate QR
+        </button>
+      </div>
+    </div>
+
+    <!-- Scanner -->
+    <div id="scannerContainer" class="scanner-container">
+      <div id="qrReader"></div>
+    </div>
+
+    <div class="scan-status" id="scanStatus">
+      Mengecek koneksi...
+    </div>
+
+    <div class="scan-buttons">
+      <button class="btn btn-primary" id="scanBtn">
+        📷 Mulai Scan
+      </button>
+
+      <button class="btn hidden" id="stopScanBtn">
+        ⏹️ Tutup Scanner
+      </button>
+    </div>
+
+    <!-- Student List -->
+    <div class="student-list">
+      <div class="list-header">
+        <h2>Daftar Mahasiswa</h2>
+        <span class="badge" id="studentCount">
+          0 mahasiswa
+        </span>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>NIM</th>
+              <th>Nama</th>
+              <th>Kelas</th>
+              <th>Jurusan</th>
+              <th>Status</th>
+              <th>Waktu Hadir</th>
+            </tr>
+          </thead>
+
+          <tbody id="studentTableBody">
+            <tr>
+              <td colspan="6" class="empty-state">
+                Memuat data...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Connection Status -->
+    <div class="connection-status">
+      <span class="dot loading" id="connectionDot"></span>
+      <span id="connectionMsg">
+        Menghubungkan ke Google Sheets...
+      </span>
+    </div>
+
+    <div class="footer-note">
+      © 2026 Presensi Digital
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

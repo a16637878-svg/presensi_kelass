@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview Tema Gradasi Bergerak — Presensi Digital</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+
+  body {
+    background: #eef1f5;
+    padding: 40px 20px;
+    color: #111;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #6366f1, #ec4899, #f59e0b, #10b981, #6366f1);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: titleFlow 6s linear infinite;
+  }
+
+  @keyframes titleFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  .page-subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 40px;
+    font-size: .95rem;
+  }
+
+  .tema-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .tema-card {
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,.12);
+    background: #fff;
+    transition: transform .3s;
+  }
+
+  .tema-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .tema-label {
+    padding: 18px 22px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-size: 300% 100% !important;
+    animation: flowBg 5s linear infinite;
+  }
+
+  .tema-label span:last-child {
+    font-size: .78rem;
+    opacity: .85;
+    font-weight: 400;
+  }
+
+  @keyframes flowBg {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ====== PREVIEW WRAPPER ====== */
+  .preview {
+    padding: 24px;
+    min-height: 680px;
+  }
+
+  .preview h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 4px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 300% 100% !important;
+    animation: flowBg 5s linear infinite;
+  }
+
+  .preview .subtitle {
+    text-align: center;
+    font-size: .8rem;
+    margin-bottom: 18px;
+    opacity: .75;
+  }
+
+  .preview .qr-section {
+    border-radius: 18px;
+    padding: 18px;
+    text-align: center;
+    margin-bottom: 16px;
+    border: 1px solid;
+  }
+
+  .preview .qr-box {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 14px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .72rem;
+    font-weight: 600;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0,0,0,.18);
+    background-size: 300% 300% !important;
+    animation: flowBgDiag 6s ease infinite;
+  }
+
+  @keyframes flowBgDiag {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+
+  .preview .btn-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .preview .btn {
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: .75rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all .25s;
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(0,0,0,.12);
+    background-size: 300% 100% !important;
+    animation: flowBg 5s linear infinite;
+  }
+
+  .preview .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(0,0,0,.2);
+  }
+
+  .preview .input-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .preview .input-row input {
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: .75rem;
+    border: 1px solid #d1d5db;
+    outline: none;
+    min-width: 130px;
+  }
+
+  .preview .scanner-area {
+    border-radius: 14px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: .78rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+    background-size: 300% 300% !important;
+    animation: flowBgDiag 6s ease infinite;
+  }
+
+  .preview .status-line {
+    text-align: center;
+    font-size: .75rem;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .preview table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .72rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  }
+
+  .preview th {
+    padding: 9px 8px;
+    text-align: left;
+    font-weight: 700;
+    color: #fff;
+    font-size: .7rem;
+    background-size: 300% 100% !important;
+    animation: flowBg 5s linear infinite;
+  }
+
+  .preview td {
+    padding: 9px 8px;
+    background: #fff;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .preview tr:nth-child(even) td {
+    background: #fafbfc;
+  }
+
+  .preview .badge {
+    padding: 3px 11px;
+    border-radius: 20px;
+    font-size: .65rem;
+    font-weight: 600;
+    display: inline-block;
+    color: #fff;
+  }
+
+  .preview .footer-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 9px 14px;
+    border-radius: 12px;
+    font-size: .72rem;
+    color: #fff;
+    font-weight: 500;
+    background-size: 300% 100% !important;
+    animation: flowBg 5s linear infinite;
+  }
+
+  .preview .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 8px #fff;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(.85); }
+  }
+
+  /* ========= TEMA 1: SUNSET FLOW ========= */
+  .a1 .tema-label,
+  .a1 .preview h1,
+  .a1 .preview th,
+  .a1 .preview .footer-status {
+    background: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6, #f97316);
+  }
+  .a1 .preview { background: linear-gradient(180deg, #fff7ed 0%, #fdf2f8 100%); }
+  .a1 .preview .subtitle { color: #9a3412; }
+  .a1 .preview .qr-section { background: #fff; border-color: #fed7aa; box-shadow: 0 4px 14px rgba(249,115,22,.08); }
+  .a1 .preview .qr-box { background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6, #f97316); }
+  .a1 .preview .btn { background: linear-gradient(90deg, #f97316, #ec4899, #f97316); }
+  .a1 .preview .btn.alt { background: linear-gradient(90deg, #8b5cf6, #6366f1, #8b5cf6); }
+  .a1 .preview .btn.danger { background: linear-gradient(90deg, #ef4444, #b91c1c, #ef4444); }
+  .a1 .preview .scanner-area { background: linear-gradient(135deg, #1f2937, #111827, #4c1d95, #1f2937); }
+  .a1 .preview .status-line { color: #9a3412; }
+  .a1 .preview .badge { background: linear-gradient(90deg, #f59e0b, #d97706, #f59e0b); }
+  .a1 .preview .badge.hadir { background: linear-gradient(90deg, #10b981, #059669, #10b981); }
+
+  /* ========= TEMA 2: OCEAN FLOW ========= */
+  .a2 .tema-label,
+  .a2 .preview h1,
+  .a2 .preview th,
+  .a2 .preview .footer-status {
+    background: linear-gradient(90deg, #06b6d4, #3b82f6, #6366f1, #06b6d4);
+  }
+  .a2 .preview { background: linear-gradient(180deg, #ecfeff 0%, #eef2ff 100%); }
+  .a2 .preview .subtitle { color: #1e40af; }
+  .a2 .preview .qr-section { background: #fff; border-color: #bfdbfe; box-shadow: 0 4px 14px rgba(59,130,246,.08); }
+  .a2 .preview .qr-box { background: linear-gradient(135deg, #06b6d4, #3b82f6, #6366f1, #06b6d4); }
+  .a2 .preview .btn { background: linear-gradient(90deg, #06b6d4, #3b82f6, #06b6d4); }
+  .a2 .preview .btn.alt { background: linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1); }
+  .a2 .preview .btn.danger { background: linear-gradient(90deg, #ef4444, #b91c1c, #ef4444); }
+  .a2 .preview .scanner-area { background: linear-gradient(135deg, #0f172a, #1e3a8a, #0f172a); }
+  .a2 .preview .status-line { color: #1e40af; }
+  .a2 .preview .badge { background: linear-gradient(90deg, #f59e0b, #d97706, #f59e0b); }
+  .a2 .preview .badge.hadir { background: linear-gradient(90deg, #10b981, #059669, #10b981); }
+
+  /* ========= TEMA 3: FOREST FLOW ========= */
+  .a3 .tema-label,
+  .a3 .preview h1,
+  .a3 .preview th,
+  .a3 .preview .footer-status {
+    background: linear-gradient(90deg, #22c55e, #10b981, #14b8a6, #22c55e);
+  }
+  .a3 .preview { background: linear-gradient(180deg, #f0fdf4 0%, #ecfdf5 100%); }
+  .a3 .preview .subtitle { color: #065f46; }
+  .a3 .preview .qr-section { background: #fff; border-color: #a7f3d0; box-shadow: 0 4px 14px rgba(16,185,129,.08); }
+  .a3 .preview .qr-box { background: linear-gradient(135deg, #22c55e, #10b981, #14b8a6, #22c55e); }
+  .a3 .preview .btn { background: linear-gradient(90deg, #22c55e, #10b981, #22c55e); }
+  .a3 .preview .btn.alt { background: linear-gradient(90deg, #14b8a6, #06b6d4, #14b8a6); }
+  .a3 .preview .btn.danger { background: linear-gradient(90deg, #ef4444, #b91c1c, #ef4444); }
+  .a3 .preview .scanner-area { background: linear-gradient(135deg, #064e3b, #065f46, #064e3b); }
+  .a3 .preview .status-line { color: #065f46; }
+  .a3 .preview .badge { background: linear-gradient(90deg, #f59e0b, #d97706, #f59e0b); }
+  .a3 .preview .badge.hadir { background: linear-gradient(90deg, #0ea5e9, #0284c7, #0ea5e9); }
+
+  /* ========= TEMA 4: PURPLE DREAM FLOW ========= */
+  .a4 .tema-label,
+  .a4 .preview h1,
+  .a4 .preview th,
+  .a4 .preview .footer-status {
+    background: linear-gradient(90deg, #a855f7, #d946ef, #ec4899, #a855f7);
+  }
+  .a4 .preview { background: linear-gradient(180deg, #faf5ff 0%, #fdf2f8 100%); }
+  .a4 .preview .subtitle { color: #6b21a8; }
+  .a4 .preview .qr-section { background: #fff; border-color: #e9d5ff; box-shadow: 0 4px 14px rgba(168,85,247,.08); }
+  .a4 .preview .qr-box { background: linear-gradient(135deg, #a855f7, #d946ef, #ec4899, #a855f7); }
+  .a4 .preview .btn { background: linear-gradient(90deg, #a855f7, #d946ef, #a855f7); }
+  .a4 .preview .btn.alt { background: linear-gradient(90deg, #ec4899, #f43f5e, #ec4899); }
+  .a4 .preview .btn.danger { background: linear-gradient(90deg, #ef4444, #b91c1c, #ef4444); }
+  .a4 .preview .scanner-area { background: linear-gradient(135deg, #3b0764, #581c87, #3b0764); }
+  .a4 .preview .status-line { color: #6b21a8; }
+  .a4 .preview .badge { background: linear-gradient(90deg, #f59e0b, #d97706, #f59e0b); }
+  .a4 .preview .badge.hadir { background: linear-gradient(90deg, #10b981, #059669, #10b981); }
+
+  /* ========= TEMA 5: DARK NEON FLOW ========= */
+  .a5 .tema-label,
+  .a5 .preview h1,
+  .a5 .preview th,
+  .a5 .preview .footer-status {
+    background: linear-gradient(90deg, #06b6d4, #a855f7, #ec4899, #06b6d4);
+  }
+  .a5 .preview { background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%); color: #e2e8f0; }
+  .a5 .preview .subtitle { color: #94a3b8; }
+  .a5 .preview .qr-section { background: rgba(30,27,75,.6); border-color: #4338ca; box-shadow: 0 4px 20px rgba(99,102,241,.2); }
+  .a5 .preview .qr-box { background: linear-gradient(135deg, #06b6d4, #a855f7, #ec4899, #06b6d4); }
+  .a5 .preview .btn { background: linear-gradient(90deg, #06b6d4, #a855f7, #06b6d4); }
+  .a5 .preview .btn.alt { background: linear-gradient(90deg, #a855f7, #ec4899, #a855f7); }
+  .a5 .preview .btn.danger { background: linear-gradient(90deg, #ef4444, #b91c1c, #ef4444); }
+  .a5 .preview .input-row input { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+  .a5 .preview .scanner-area { background: linear-gradient(135deg, #020617, #0f172a, #1e1b4b, #020617); box-shadow: inset 0 0 40px rgba(6,182,212,.3); }
+  .a5 .preview .status-line { color: #94a3b8; }
+  .a5 .preview td { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+  .a5 .preview tr:nth-child(even) td { background: #1e293b; }
+  .a5 .preview .badge { background: linear-gradient(90deg, #f59e0b, #d97706, #f59e0b); }
+  .a5 .preview .badge.hadir { background: linear-gradient(90deg, #10b981, #059669, #10b981); }
+
+  /* ========= TEMA 6: GOLD LUXURY FLOW ========= */
+  .a6 .tema-label,
+  .a6 .preview h1,
+  .a6 .preview th,
+  .a6 .preview .footer-status {
+    background: linear-gradient(90deg, #1e3a8a, #d4a017, #fbbf24, #1e3a8a);
+  }
+  .a6 .preview { background: linear-gradient(180deg, #f8fafc 0%, #fef9e7 100%); }
+  .a6 .preview .subtitle { color: #1e3a8a; }
+  .a6 .preview .qr-section { background: #fff; border-color: #fde68a; box-shadow: 0 4px 14px rgba(212,160,23,.15); }
+  .a6 .preview .qr-box { background: linear-gradient(135deg, #1e3a8a, #d4a017, #fbbf24, #1e3a8a); }
+  .a6 .preview .btn { background: linear-gradient(90deg, #1e3a8a, #3b82f6, #1e3a8a); }
+  .a6 .preview .btn.alt { background: linear-gradient(90deg, #d4a017, #fbbf24, #d4a017); }
+  .a6 .preview .btn.danger { background: linear-gradient(90deg, #ef4444, #b91c1c, #ef4444); }
+  .a6 .preview .scanner-area { background: linear-gradient(135deg, #0f172a, #1e3a8a, #0f172a); }
+  .a6 .preview .status-line { color: #1e3a8a; }
+  .a6 .preview .badge { background: linear-gradient(90deg, #f59e0b, #d97706, #f59e0b); }
+  .a6 .preview .badge.hadir { background: linear-gradient(90deg, #10b981, #059669, #10b981); }
+
+</style>
+</head>
+<body>
+
+  <h1 class="page-title">✨ Preview Tema Gradasi Bergerak ✨</h1>
+  <p class="page-subtitle">Warna mengalir secara otomatis. Pilih favorit, sebut nomornya (1–6)</p>
+
+  <div class="tema-grid">
+
+    <!-- ==== TEMA 1 ==== -->
+    <div class="tema-card a1">
+      <div class="tema-label"><span>1. Sunset Flow 🌅</span><span>Orange → Pink → Purple</span></div>
+      <div class="preview">
+        <h1>Presensi Kelas</h1>
+        <p class="subtitle">Scan QR Code untuk Absensi</p>
+        <div class="qr-section">
+          <div class="qr-box">QR</div>
+          <div class="btn-row">
+            <button class="btn">🔄 Refresh</button>
+            <button class="btn alt">⬇️ Download</button>
+            <button class="btn danger">🗑️ Reset</button>
+          </div>
+          <div class="input-row">
+            <input placeholder="Ketik NIM..." />
+            <button class="btn">Generate</button>
+          </div>
+        </div>
+        <div class="scanner-area">📷 Area Kamera</div>
+        <div class="status-line">Siap scan...</div>
+        <table>
+          <thead><tr><th>NIM</th><th>Nama</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>2025001</td><td>Killua</td><td><span class="badge hadir">Hadir</span></td></tr>
+            <tr><td>2025002</td><td>Gon</td><td><span class="badge">Menunggu</span></td></tr>
+            <tr><td>2025003</td><td>Kurapika</td><td><span class="badge">Menunggu</span></td></tr>
+          </tbody>
+        </table>
+        <div class="footer-status"><span class="dot"></span> Terhubung • 9 mahasiswa</div>
+      </div>
+    </div>
+
+    <!-- ==== TEMA 2 ==== -->
+    <div class="tema-card a2">
+      <div class="tema-label"><span>2. Ocean Flow 🌊</span><span>Cyan → Blue → Indigo</span></div>
+      <div class="preview">
+        <h1>Presensi Kelas</h1>
+        <p class="subtitle">Scan QR Code untuk Absensi</p>
+        <div class="qr-section">
+          <div class="qr-box">QR</div>
+          <div class="btn-row">
+            <button class="btn">🔄 Refresh</button>
+            <button class="btn alt">⬇️ Download</button>
+            <button class="btn danger">🗑️ Reset</button>
+          </div>
+          <div class="input-row">
+            <input placeholder="Ketik NIM..." />
+            <button class="btn">Generate</button>
+          </div>
+        </div>
+        <div class="scanner-area">📷 Area Kamera</div>
+        <div class="status-line">Siap scan...</div>
+        <table>
+          <thead><tr><th>NIM</th><th>Nama</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>2025001</td><td>Killua</td><td><span class="badge hadir">Hadir</span></td></tr>
+            <tr><td>2025002</td><td>Gon</td><td><span class="badge">Menunggu</span></td></tr>
+            <tr><td>2025003</td><td>Kurapika</td><td><span class="badge">Menunggu</span></td></tr>
+          </tbody>
+        </table>
+        <div class="footer-status"><span class="dot"></span> Terhubung • 9 mahasiswa</div>
+      </div>
+    </div>
+
+    <!-- ==== TEMA 3 ==== -->
+    <div class="tema-card a3">
+      <div class="tema-label"><span>3. Forest Flow 🌿</span><span>Green → Teal</span></div>
+      <div class="preview">
+        <h1>Presensi Kelas</h1>
+        <p class="subtitle">Scan QR Code untuk Absensi</p>
+        <div class="qr-section">
+          <div class="qr-box">QR</div>
+          <div class="btn-row">
+            <button class="btn">🔄 Refresh</button>
+            <button class="btn alt">⬇️ Download</button>
+            <button class="btn danger">🗑️ Reset</button>
+          </div>
+          <div class="input-row">
+            <input placeholder="Ketik NIM..." />
+            <button class="btn">Generate</button>
+          </div>
+        </div>
+        <div class="scanner-area">📷 Area Kamera</div>
+        <div class="status-line">Siap scan...</div>
+        <table>
+          <thead><tr><th>NIM</th><th>Nama</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>2025001</td><td>Killua</td><td><span class="badge hadir">Hadir</span></td></tr>
+            <tr><td>2025002</td><td>Gon</td><td><span class="badge">Menunggu</span></td></tr>
+            <tr><td>2025003</td><td>Kurapika</td><td><span class="badge">Menunggu</span></td></tr>
+          </tbody>
+        </table>
+        <div class="footer-status"><span class="dot"></span> Terhubung • 9 mahasiswa</div>
+      </div>
+    </div>
+
+    <!-- ==== TEMA 4 ==== -->
+    <div class="tema-card a4">
+      <div class="tema-label"><span>4. Purple Dream Flow 💜</span><span>Purple → Pink</span></div>
+      <div class="preview">
+        <h1>Presensi Kelas</h1>
+        <p class="subtitle">Scan QR Code untuk Absensi</p>
+        <div class="qr-section">
+          <div class="qr-box">QR</div>
+          <div class="btn-row">
+            <button class="btn">🔄 Refresh</button>
+            <button class="btn alt">⬇️ Download</button>
+            <button class="btn danger">🗑️ Reset</button>
+          </div>
+          <div class="input-row">
+            <input placeholder="Ketik NIM..." />
+            <button class="btn">Generate</button>
+          </div>
+        </div>
+        <div class="scanner-area">📷 Area Kamera</div>
+        <div class="status-line">Siap scan...</div>
+        <table>
+          <thead><tr><th>NIM</th><th>Nama</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>2025001</td><td>Killua</td><td><span class="badge hadir">Hadir</span></td></tr>
+            <tr><td>2025002</td><td>Gon</td><td><span class="badge">Menunggu</span></td></tr>
+            <tr><td>2025003</td><td>Kurapika</td><td><span class="badge">Menunggu</span></td></tr>
+          </tbody>
+        </table>
+        <div class="footer-status"><span class="dot"></span> Terhubung • 9 mahasiswa</div>
+      </div>
+    </div>
+
+    <!-- ==== TEMA 5 ==== -->
+    <div class="tema-card a5">
+      <div class="tema-label"><span>5. Dark Neon Flow ⚡</span><span>Cyberpunk</span></div>
+      <div class="preview">
+        <h1>Presensi Kelas</h1>
+        <p class="subtitle">Scan QR Code untuk Absensi</p>
+        <div class="qr-section">
+          <div class="qr-box">QR</div>
+          <div class="btn-row">
+            <button class="btn">🔄 Refresh</button>
+            <button class="btn alt">⬇️ Download</button>
+            <button class="btn danger">🗑️ Reset</button>
+          </div>
+          <div class="input-row">
+            <input placeholder="Ketik NIM..." />
+            <button class="btn">Generate</button>
+          </div>
+        </div>
+        <div class="scanner-area">📷 Area Kamera</div>
+        <div class="status-line">Siap scan...</div>
+        <table>
+          <thead><tr><th>NIM</th><th>Nama</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>2025001</td><td>Killua</td><td><span class="badge hadir">Hadir</span></td></tr>
+            <tr><td>2025002</td><td>Gon</td><td><span class="badge">Menunggu</span></td></tr>
+            <tr><td>2025003</td><td>Kurapika</td><td><span class="badge">Menunggu</span></td></tr>
+          </tbody>
+        </table>
+        <div class="footer-status"><span class="dot"></span> Terhubung • 9 mahasiswa</div>
+      </div>
+    </div>
+
+    <!-- ==== TEMA 6 ==== -->
+    <div class="tema-card a6">
+      <div class="tema-label"><span>6. Gold Luxury Flow 👑</span><span>Navy → Gold</span></div>
+      <div class="preview">
+        <h1>Presensi Kelas</h1>
+        <p class="subtitle">Scan QR Code untuk Absensi</p>
+        <div class="qr-section">
+          <div class="qr-box">QR</div>
+          <div class="btn-row">
+            <button class="btn">🔄 Refresh</button>
+            <button class="btn alt">⬇️ Download</button>
+            <button class="btn danger">🗑️ Reset</button>
+          </div>
+          <div class="input-row">
+            <input placeholder="Ketik NIM..." />
+            <button class="btn">Generate</button>
+          </div>
+        </div>
+        <div class="scanner-area">📷 Area Kamera</div>
+        <div class="status-line">Siap scan...</div>
+        <table>
+          <thead><tr><th>NIM</th><th>Nama</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>2025001</td><td>Killua</td><td><span class="badge hadir">Hadir</span></td></tr>
+            <tr><td>2025002</td><td>Gon</td><td><span class="badge">Menunggu</span></td></tr>
+            <tr><td>2025003</td><td>Kurapika</td><td><span class="badge">Menunggu</span></td></tr>
+          </tbody>
+        </table>
+        <div class="footer-status"><span class="dot"></span> Terhubung • 9 mahasiswa</div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="text-align:center; margin-top:40px; color:#6b7280; font-size:.9rem;">
+    © 2025 Preview Gradasi Bergerak — sebut nomornya ke saya (1–6) ✨
+  </p>
+
+</body>
+</html>
